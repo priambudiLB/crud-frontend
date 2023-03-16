@@ -1,106 +1,616 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import Chart from "react-apexcharts";
 
 function App() {
-  const [data, setData] = useState([])
-  const [nameCreate, setNameCreate] = useState('')
-  const [ageCreate, setAgeCreate] = useState()
-
-  // untuk trigger useEffect getData
-  // const [dataGenerated, setDataGenerated] = useState(0)
-
-  const getData = async () => {
-    await axios({
-      method: 'get',
-      url: 'http://localhost:7777/employee',
-    })
-      .then(function (response) {
-        console.log(response.data.data)
-        setData(response.data.data)
-      })
-      .catch(function (error) {
-        alert(error.message)
-      });
-  }
-
-  const handleGenerateData = () => {
-    console.log("clicked")
-    axios({
-      method: 'post',
-      url: 'http://localhost:7777/product',
-      data: {
-        name: nameCreate,
-        age: ageCreate
+  const options = {
+    chart: {
+      height: 350,
+      type: "rangeBar",
+      events: {
+        dataPointSelection: function (event, chartContext, config) {
+          console.log(event, chartContext, config)
+          console.log(event.target.dataset.rangeY1)
+        }
       }
-    })
-      .then(function (response) {
-        setAgeCreate()
-        setNameCreate('')
-        getData()
-
-        // untuk mereload halaman 
-        // window.location.reload()
-      });
-  }
-
-  const handleEdit = (id) => {
-    console.log('edit id: ' + id)
-    axios({
-      method: 'put',
-      url: 'http://localhost:7777/employee/' + id,
-      data: {
-        name: 'Bagas (edit)',
-        age: 1
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+      },
+    },
+    xaxis: {
+      type: "datetime",
+      labels: {
+        format: 'mm:ss:fff',
       }
-    })
-      .then(function () {
-        getData()
-      });
-  }
-
-  const handleDelete = (id) => {
-    console.log('delete id: ' + id)
-    if (window.confirm("Sure delete id: " + id + " ????????")) {
-      axios({
-        method: 'post',
-        url: 'http://localhost:7777/employee/delete/' + id,
-      })
-        .then(function () {
-          getData()
-        });
+    },
+    tooltip: {
+      custom: function ({ dataPointIndex, w }) {
+        const itemCountMap = w.globals.initialSeries[0].data.reduce(function (r, e) {
+          r[e.x + e.y[0]] = (r[e.x + e.y[0]] || 0) + 1
+          return r;
+        }, {})
+        return '<div>' +
+          '<span>Total: ' + itemCountMap[w.globals.initialSeries[0].data[dataPointIndex].x + w.globals.initialSeries[0].data[dataPointIndex].y[0]] + '</span>' +
+          '</div>'
+      },
+      x: {
+        show: false,
+        format: 'mm:ss:fff',
+        formatter: undefined,
+      },
+      y: {
+        show: false,
+        formatter: undefined,
+        format: 'mm:ss:fff',
+      },
     }
-  }
-
-  useEffect(() => {
-    getData()
-
-    // taroh dataGenerated di dalam array di bawah sini
-  }, [])
+  };
+  const series = [
+    {
+      data: [
+        {
+          "x": "RBC",
+          "y": [
+            0,
+            800
+          ],
+          "rangeName": "dewpldd"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            0,
+            800
+          ],
+          "rangeName": "msqdpwqg"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            0,
+            800
+          ],
+          "rangeName": "mfnqjjin"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            0,
+            800
+          ],
+          "rangeName": "6yrmwxol"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            0,
+            800
+          ],
+          "rangeName": "avtexhxg"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            800,
+            1600
+          ],
+          "rangeName": "knmzaife"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            800,
+            1600
+          ],
+          "rangeName": "37atpwbzk"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            800,
+            1600
+          ],
+          "rangeName": "tapdwlbv"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            800,
+            1600
+          ],
+          "rangeName": "iw3df661"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            800,
+            1600
+          ],
+          "rangeName": "cj0vjlq8"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            1600,
+            2400
+          ],
+          "rangeName": "zyb4prra"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            1600,
+            2400
+          ],
+          "rangeName": "jx554gmv"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            1600,
+            2400
+          ],
+          "rangeName": "1t4mzpek"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            1600,
+            2400
+          ],
+          "rangeName": "0dh3odav"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            1600,
+            2400
+          ],
+          "rangeName": "6h6pn9vq"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            2400,
+            3200
+          ],
+          "rangeName": "l205eapn"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            2400,
+            3200
+          ],
+          "rangeName": "vfdg6vnv"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            2400,
+            3200
+          ],
+          "rangeName": "e84g4cmy"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            2400,
+            3200
+          ],
+          "rangeName": "zicwnl4zh"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            2400,
+            3200
+          ],
+          "rangeName": "f1jtcm0n"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            3200,
+            4000
+          ],
+          "rangeName": "pk7ic19d"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            3200,
+            4000
+          ],
+          "rangeName": "rapnh54g"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            3200,
+            4000
+          ],
+          "rangeName": "6udn7pgd"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            3200,
+            4000
+          ],
+          "rangeName": "2ye9asyp"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            3200,
+            4000
+          ],
+          "rangeName": "7r460dmi"
+        },
+        {
+          "x": "WBC",
+          "y": [
+            3200,
+            4000
+          ],
+          "rangeName": "j0njvmmj"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            4000,
+            4800
+          ],
+          "rangeName": "8gjyixqt"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            4000,
+            4800
+          ],
+          "rangeName": "a4g0pdv8"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            4000,
+            4800
+          ],
+          "rangeName": "372ajknk"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            4000,
+            4800
+          ],
+          "rangeName": "w3p3wlc7"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            4000,
+            4800
+          ],
+          "rangeName": "rtgz097k"
+        },
+        {
+          "x": "WBC",
+          "y": [
+            4000,
+            4800
+          ],
+          "rangeName": "iqggw5nf"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            4800,
+            5600
+          ],
+          "rangeName": "9xxnpvra"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            4800,
+            5600
+          ],
+          "rangeName": "mmbw3bbn"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            4800,
+            5600
+          ],
+          "rangeName": "7jtknsys"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            4800,
+            5600
+          ],
+          "rangeName": "p077q2jq"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            4800,
+            5600
+          ],
+          "rangeName": "mfmpciin"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "6wcphry8"
+        },
+        {
+          "x": "WBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "ow8558c1"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "hq3rpvjz"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "r9mdnrqj"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "rh46azkwh"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "2247jwjx"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "my83eqyag"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "tvbn6nvg"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "2vqtilaq"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "ilrb1qslg"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "nzuvloog"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "8t43x3c7"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "tl4v88egj"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            5600,
+            6400
+          ],
+          "rangeName": "bxdo0e6nj"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "5oopqksr"
+        },
+        {
+          "x": "WBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "qzf4r6te"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "dkohoz85"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "hrjbpjs6k"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "7ne7h4rq"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "tgqae8i9"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "mbe70hwzf"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "nzz55gkc"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "yeavpv4w"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "xtv74j5i"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "bbtyy426k"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "a1k3n6h"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "gb5l5nz5f"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            6400,
+            7200
+          ],
+          "rangeName": "7qvhm631"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            7200,
+            8000
+          ],
+          "rangeName": "xv6t8mcc"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            7200,
+            8000
+          ],
+          "rangeName": "y3u796w7"
+        },
+        {
+          "x": "RBC",
+          "y": [
+            8000,
+            8800
+          ],
+          "rangeName": "nx3y6twp"
+        },
+        {
+          "x": "WBC",
+          "y": [
+            8000,
+            8800
+          ],
+          "rangeName": "ojoabojv"
+        }
+      ],
+    },
+  ];
 
   return (
-    <>
-      <input value={nameCreate} onChange={(e) => setNameCreate(e.target.value)} type="text" />
-      <input value={ageCreate} onChange={(e) => setAgeCreate(e.target.value)} type="number" />
-      <br />
-      <button onClick={handleGenerateData}>Generate Data | now: {data.length}</button>
-      {data.map((item, index) => {
-        return <ul key={index}>
-          <p>{item.id}</p>
-          <li>
-            {item.name}
-          </li>
-          <li>
-            {item.age}
-          </li>
-          {/* 
-            (event) => handleDelete(event) 
-            handleDelete
-            */}
-          <button onClick={() => handleEdit(item.id)}>Edit</button>
-          <button onClick={() => handleDelete(item.id)}>Delete ID: {item.id}</button>
-        </ul>
-      })}
-    </>
+    <Chart
+      options={options}
+      series={series}
+      type={"rangeBar"}
+      height={350}
+    />
   );
 }
 
